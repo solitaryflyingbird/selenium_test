@@ -1,0 +1,58 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+
+import time
+
+# Replace 'path/to/chromedriver' with the actual path to your chromedriver executable
+driver = webdriver.Chrome(executable_path='path/to/chromedriver')
+
+
+attack = 'https://gall.dcinside.com/mgallery/board/write/?id=whitehouse'
+
+# Replace 'https://example.com' with the website containing the button
+driver.get(attack)
+
+
+def test(arr):
+    for i in arr:
+        try:
+            x = driver.find_elements(By.ID, i)
+            x.click()
+            
+        except:
+            print("error", i)
+
+
+try:
+
+    time.sleep(1)
+    nickname_input = driver.find_element("name", "name")
+    password_input = driver.find_element("name", "password")
+    subject_input = driver.find_element("name", "subject")
+
+    nickname_input.send_keys('YourNickname')
+    password_input.send_keys('YourPassword')
+    subject_input.send_keys("ㅂㅅ드뽕 키어스틴 시네마 자살좀")
+  
+
+    x = driver.find_element(By.CLASS_NAME, "tx-bar-right")
+    iframe = driver.find_element(By.CSS_SELECTOR,'iframe')
+    driver.switch_to.frame(iframe)
+    html = driver.page_source
+    with open('html_file.html', 'w', encoding='utf-8') as f:
+        f.write(driver.page_source)
+    time.sleep(5)
+    dd = driver.find_element(By.CLASS_NAME, 'tx-content-container')
+    driver.switch_to.default_content()
+
+    time.sleep(7)
+
+
+
+finally:
+    print("quit")
+    # Close the browser (you can use time.sleep() before this line if you want to keep the browser open for some time)
+    driver.quit()
