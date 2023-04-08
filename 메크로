@@ -10,7 +10,7 @@ import time
 driver = webdriver.Chrome(executable_path='path/to/chromedriver')
 
 
-attack = 'https://gall.dcinside.com/mgallery/board/write/?id=whitehouse'
+attack = "https://gall.dcinside.com/mgallery/board/write/?id=blackout"
 
 # Replace 'https://example.com' with the website containing the button
 driver.get(attack)
@@ -35,18 +35,14 @@ try:
 
     nickname_input.send_keys('YourNickname')
     password_input.send_keys('YourPassword')
-    subject_input.send_keys("ㅂㅅ드뽕 키어스틴 시네마 자살좀")
-  
+    subject_input.send_keys("실험중입니다.")
 
-    x = driver.find_element(By.CLASS_NAME, "tx-bar-right")
-    iframe = driver.find_element(By.CSS_SELECTOR,'iframe')
+    
+    iframe = driver.find_element("name", "tx_canvas_wysiwyg")
     driver.switch_to.frame(iframe)
-    html = driver.page_source
-    with open('html_file.html', 'w', encoding='utf-8') as f:
-        f.write(driver.page_source)
-    time.sleep(5)
-    dd = driver.find_element(By.CLASS_NAME, 'tx-content-container')
-    driver.switch_to.default_content()
+    main_input = driver.find_element(By.CLASS_NAME, "tx-content-container")
+    main_input.send_keys("x")
+    
 
     time.sleep(7)
 
