@@ -2,13 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 import time, os, random, requests
 
-
 options = Options()
 
+rand_user_folder = 1
+usercookiedir = os.path.abspath(f"./cookies/{rand_user_folder}")
+if os.path.exists(usercookiedir) == False:
+    os.mkdir(usercookiedir)
+
+options.add_argument(f"--user-data-dir={usercookiedir}")
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument("--disable-blink-features=AutomationControlled")
@@ -27,10 +32,15 @@ driver = webdriver.Chrome(executable_path='path/to/chromedriver', desired_capabi
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
 
 driver.implicitly_wait(1) 
-actions = ActionChains(driver)
+print(driver.get_cookies())
 
-URL = "https://gall.dcinside.com/mgallery/board/write/?id=covidvaccine"
-driver.get(URL)
+
+
+
+
+
+attack = "https://gall.dcinside.com/board/write/?id=football_new8"
+driver.get(attack)
 
 
 
@@ -44,6 +54,14 @@ try:
     nickname_input.send_keys('ㅇㅇ')
     password_input.send_keys('1111')
     subject_input.send_keys("실험중입니다.")
+
+    main_window = driver.current_window_handle
+    for handle in driver.window_handles:
+        if handle != main_window:
+            driver.switch_to.window(handle)
+            driver.close()
+    driver.switch_to.window(main_window)
+
     
     iframe = driver.find_element("name", "tx_canvas_wysiwyg")
     driver.switch_to.frame(iframe)
@@ -54,15 +72,6 @@ try:
 
     button = driver.find_element(By.CSS_SELECTOR, '.btn_blue.btn_svc.write')
     button.click()
-    print(111)
-    time.sleep(1)
-    #nickname_input.send_keys('ㅇㅇ')
-    #password_input.send_keys('1111')
-    time.sleep(1)
-    x = driver.window_handles
-    print(x)
-
-
     print("click")
     time.sleep(1227)
 

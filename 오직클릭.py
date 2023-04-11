@@ -29,32 +29,17 @@ driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () =>
 driver.implicitly_wait(1) 
 actions = ActionChains(driver)
 
-URL = "https://gall.dcinside.com/mgallery/board/write/?id=covidvaccine"
+URL = "https://gall.dcinside.com/board/write/?id=football_new8"
 driver.get(URL)
 
 
 
 try:
-    time.sleep(1)
-    nickname_input = driver.find_element("name", "name")
-    password_input = driver.find_element("name", "password")
-    subject_input = driver.find_element("name", "subject")
-    nickname_input.clear()
-    password_input.clear()
-    nickname_input.send_keys('ㅇㅇ')
-    password_input.send_keys('1111')
-    subject_input.send_keys("실험중입니다.")
-    
-    iframe = driver.find_element("name", "tx_canvas_wysiwyg")
-    driver.switch_to.frame(iframe)
-    main_input = driver.find_element(By.CLASS_NAME, "tx-content-container")
-    main_input.send_keys("x")
-    driver.switch_to.default_content()
-
+    time.sleep(21)
 
     button = driver.find_element(By.CSS_SELECTOR, '.btn_blue.btn_svc.write')
     button.click()
-    print(111)
+
     time.sleep(1)
     #nickname_input.send_keys('ㅇㅇ')
     #password_input.send_keys('1111')
