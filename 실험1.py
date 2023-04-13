@@ -7,6 +7,24 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time, os, random, requests
 
 
+def move_to_element_smoothly(driver, element, duration=1, steps=50):
+    action_chains = ActionChains(driver)
+    start_x, start_y = (0,0)
+    current_x, current_y = start_x, start_y
+    target_x, target_y = start_x + element.size['width'] // 2, start_y + element.size['height'] // 2
+
+    for step in range(1, steps + 1):
+        t = step / steps
+        next_x = start_x + (target_x - start_x) * t
+        next_y = start_y + (target_y - start_y) * t
+        action_chains.move_by_offset(next_x - current_x, next_y - current_y)
+        current_x, current_y = next_x, next_y
+        time.sleep(duration / steps)
+
+    action_chains.perform()
+
+
+
 options = Options()
 
 options.add_argument('--no-sandbox')
@@ -43,8 +61,11 @@ try:
     nickname_input.send_keys('ㅇㅇ')
     password_input.send_keys('1111')
     subject_input.send_keys("소농민.")
-    
+
+    actions = ActionChains(driver)
     iframe = driver.find_element("name", "tx_canvas_wysiwyg")
+    actions.move_to_element(iframe).perform()
+
     driver.switch_to.frame(iframe)
     
     
@@ -52,24 +73,32 @@ try:
 
 
 
-    actions = ActionChains(driver)
+    
+    move_to_element_smoothly(driver, password_input, duration=1, steps=50)
+    
 
-    around_write = driver.find_element(By.ID, "write")
-    actions.move_to_element(around_write).perform()
 
 
-    actions.move_to_element(main_input).perform()
     main_input.click()
     time.sleep(0.1)
-
-
+    
+    
     main_input.send_keys("x")
     driver.switch_to.default_content()
 
     
+    time.sleep(0.1)
+
+    
+
+
 
 
     button = driver.find_element(By.CSS_SELECTOR, '.btn_blue.btn_svc.write')
+
+    actions.move_to_element(button).perform()
+
+
     button.click()
     print(111)
     time.sleep(1)
@@ -77,9 +106,11 @@ try:
     #password_input.send_keys('1111')
     time.sleep(1)
     x = driver.window_handles
+
+
+    time.sleep(1)
+
     print(x)
-
-
     print("click")
     time.sleep(1227)
 
