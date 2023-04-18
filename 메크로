@@ -4,7 +4,43 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+import pyautogui
 import time, os, random, requests
+mobile_emulation = { "deviceName": "iPhone X" }
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+
+PROXY = "198.59.191.234" # IP:Port
+webdriver.DesiredCapabilities.CHROME['proxy'] = {
+    "httpProxy": PROXY,
+    "ftpProxy": PROXY,
+    "sslProxy": PROXY,
+    "proxyType": "MANUAL"
+}
+
+
+def attack_start():
+    try:
+        URL = "https://m.dcinside.com/write/covidvaccine"
+        driver.get(URL)
+        time.sleep(1)
+        nickname_input = driver.find_element("name", "name")
+        password_input = driver.find_element("name", "password")
+        subject_input = driver.find_element("name", "subject")
+        text_box = driver.find_element(By.ID, "textBox")
+
+        nickname_input.clear()
+        password_input.clear()
+        nickname_input.send_keys('ㅇㅇ')
+        password_input.send_keys('1111')
+        subject_input.send_keys("실험중입니다.")
+        text_box.send_keys("소농민.")
+
+        #driver.find_element(By.CLASS_NAME, "btn-temp").click()
+
+    finally:
+        print("quit")
 
 
 options = Options()
@@ -16,7 +52,11 @@ options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
 # Turn-off userAutomationExtension 
 options.add_experimental_option("useAutomationExtension", False) 
+options.add_experimental_option("mobileEmulation", mobile_emulation)
 # Setting the driver path and requesting a page 
+W=360
+H=640
+options.add_argument(f"--window-size={W},{H}")
  
 
 
@@ -27,48 +67,12 @@ driver = webdriver.Chrome(executable_path='path/to/chromedriver', desired_capabi
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
 
 driver.implicitly_wait(1) 
-actions = ActionChains(driver)
-
-URL = "https://gall.dcinside.com/mgallery/board/write/?id=covidvaccine"
-driver.get(URL)
 
 
 
-try:
-    time.sleep(1)
-    nickname_input = driver.find_element("name", "name")
-    password_input = driver.find_element("name", "password")
-    subject_input = driver.find_element("name", "subject")
-    nickname_input.clear()
-    password_input.clear()
-    nickname_input.send_keys('ㅇㅇ')
-    password_input.send_keys('1111')
-    subject_input.send_keys("실험중입니다.")
-    
-    iframe = driver.find_element("name", "tx_canvas_wysiwyg")
-    driver.switch_to.frame(iframe)
-    main_input = driver.find_element(By.CLASS_NAME, "tx-content-container")
-    main_input.send_keys("x")
-    driver.switch_to.default_content()
+attack_start()
 
-
-    button = driver.find_element(By.CSS_SELECTOR, '.btn_blue.btn_svc.write')
-    button.click()
-    print(111)
-    time.sleep(1)
-    #nickname_input.send_keys('ㅇㅇ')
-    #password_input.send_keys('1111')
-    time.sleep(1)
-    x = driver.window_handles
-    print(x)
-
-
-    print("click")
-    time.sleep(1227)
+time.sleep(5111)
 
 
 
-finally:
-    print("quit")
-    # Close the browser (you can use time.sleep() before this line if you want to keep the browser open for some time)
-    driver.quit()
