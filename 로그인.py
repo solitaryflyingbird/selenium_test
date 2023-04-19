@@ -11,24 +11,19 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 
-def attack_start():
+
+def login(ID, PW):
     try:
-        URL = "https://m.dcinside.com/write/covidvaccine"
+        URL = "https://msign.dcinside.com/login?r_url=https%3A%2F%2Fm.dcinside.com"
         driver.get(URL)
-        time.sleep(1)
-        nickname_input = driver.find_element("name", "name")
-        password_input = driver.find_element("name", "password")
-        subject_input = driver.find_element("name", "subject")
-        text_box = driver.find_element(By.ID, "textBox")
+        driver.find_element("name", "code").send_keys(ID)
+        driver.find_element("name", "password").send_keys(PW)
+        driver.find_element(By.ID, "loginAction").click()
 
-        nickname_input.clear()
-        password_input.clear()
-        nickname_input.send_keys('ㅇㅇ')
-        password_input.send_keys('1111')
-        subject_input.send_keys("실험중입니다.")
-        text_box.send_keys("소농민.")
 
-        #driver.find_element(By.CLASS_NAME, "btn-temp").click()
+
+        time.sleep(100)
+
 
     finally:
         print("quit")
@@ -61,9 +56,6 @@ driver.implicitly_wait(1)
 
 
 
-attack_start()
+login("111", "22")
 
 time.sleep(5111)
-
-
-
