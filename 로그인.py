@@ -18,6 +18,7 @@ def login(ID, PW):
         driver.get(URL)
         driver.find_element("name", "code").send_keys(ID)
         driver.find_element("name", "password").send_keys(PW)
+        time.sleep(1)
         driver.find_element(By.ID, "loginAction").click()
 
 
@@ -56,6 +57,6 @@ driver.implicitly_wait(1)
 
 
 
-login("111", "22")
+login("zldjtmxlswktkfwha", "emtksahdqt1@")
 
 time.sleep(5111)
