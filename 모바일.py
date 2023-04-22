@@ -11,18 +11,10 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 
-PROXY = "198.59.191.234" # IP:Port
-webdriver.DesiredCapabilities.CHROME['proxy'] = {
-    "httpProxy": PROXY,
-    "ftpProxy": PROXY,
-    "sslProxy": PROXY,
-    "proxyType": "MANUAL"
-}
-
 
 def attack_start():
     try:
-        URL = "https://m.dcinside.com/write/covidvaccine"
+        URL = "https://m.dcinside.com/write/football_new8"
         driver.get(URL)
         time.sleep(1)
         nickname_input = driver.find_element("name", "name")
@@ -37,6 +29,8 @@ def attack_start():
         subject_input.send_keys("실험중입니다.")
         text_box.send_keys("소농민.")
 
+        button = driver.find_element(By.CLASS_NAME, "btn-temp")
+        button.click()
         #driver.find_element(By.CLASS_NAME, "btn-temp").click()
 
     finally:

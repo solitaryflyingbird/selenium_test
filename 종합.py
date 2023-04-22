@@ -22,15 +22,16 @@ def login(ID, PW):
     driver.find_element(By.ID, "loginAction").click()
     time.sleep(1)
 
-def attack_start():
+def attack_start(URL):
     try:
-        URL = "https://m.dcinside.com/write/covidvaccine"
         driver.get(URL)
         time.sleep(1)
         subject_input = driver.find_element("name", "subject")
         text_box = driver.find_element(By.ID, "textBox")
         subject_input.send_keys("실험중입니다.")
         text_box.send_keys("소농민.")
+        button = driver.find_element(By.CLASS_NAME, "btn-temp")
+        button.click()
     finally:
         print("quit")
 
@@ -56,12 +57,16 @@ capabilities = DesiredCapabilities.CHROME.copy()
 capabilities['goog:chromeOptions'] = options.to_capabilities()
 driver = webdriver.Chrome(executable_path='path/to/chromedriver', desired_capabilities=capabilities, options = options)
 # Changing the property of the navigator value for webdriver to undefined 
-driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
-driver.implicitly_wait(1) 
 
 
-login("zldjtmxlswktkfwha", "emtksahdqt1@")
+ID_list = ["gltptdi5aoi0", "gltptdi5aoi1"]
 
-print(1111)
-attack_start()
-time.sleep(5111)
+
+
+for i in range(len(ID_list)):
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
+    driver.implicitly_wait(1) 
+    login(ID_list[i], "emtksahdqt1@")
+    URL = "https://m.dcinside.com/write/football_new8"
+    attack_start(URL)
+    time.sleep(10)

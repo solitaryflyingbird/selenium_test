@@ -53,7 +53,6 @@ driver = webdriver.Chrome(executable_path='path/to/chromedriver', desired_capabi
 # Changing the property of the navigator value for webdriver to undefined 
 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
 
-driver.implicitly_wait(1) 
 
 
 
